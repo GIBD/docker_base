@@ -74,8 +74,8 @@ RUN apt-get update && \
     apt-get clean
 
 
-RUN echo 'root:luegamente' | chpasswd && \
-	mkdir /var/run/sshd && \
-	sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+ADD configure_sshd.sh /tmp/configure_sshd.sh
+EXPOSE 22
 
-EXPOSE 10022
+RUN /tmp/configure_sshd.sh && \
+    rm -f /tmp/configure_sshd.sh

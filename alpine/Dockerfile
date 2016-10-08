@@ -11,7 +11,24 @@ ENV JAVA_VERSION_MAJOR=8 \
     JAVA_HOME=/opt/jdk \
     PATH=${PATH}:/opt/jdk/bin \
     GLIBC_VERSION=2.23-r3 \
-    LANG=C.UTF-8
+    LANG=C.UTF-8 \
+    LANGUAGE=en_US:en \
+    LC_ALL=en_US.UTF-8
+
+ADD configure_sshd.sh /tmp/configure_sshd.sh
+EXPOSE 22
+
+RUN apk add --update \
+        bash \
+        openssh \
+        wget \
+        coreutils \
+        jq \
+        docker \
+        unzip 
+
+RUN /tmp/configure_sshd.sh && \
+    rm -f /tmp/configure_sshd.sh
 
 # do all in one step
 RUN apk upgrade --update && \
@@ -19,7 +36,7 @@ RUN apk upgrade --update && \
     for pkg in glibc-${GLIBC_VERSION} glibc-bin-${GLIBC_VERSION} glibc-i18n-${GLIBC_VERSION}; do curl -sSL https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/${pkg}.apk -o /tmp/${pkg}.apk; done && \
     apk add --allow-untrusted /tmp/*.apk && \
     rm -v /tmp/*.apk && \
-    ( /usr/glibc-compat/bin/localedef --force --inputfile POSIX --charmap UTF-8 C.UTF-8 || true ) && \
+    /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8 && \
     echo "export LANG=C.UTF-8" > /etc/profile.d/locale.sh && \
     /usr/glibc-compat/sbin/ldconfig /lib /usr/glibc-compat/lib && \
     mkdir /opt && \
@@ -64,11 +81,12 @@ RUN apk upgrade --update && \
            /tmp/* /var/cache/apk/* && \
     echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf
 
-RUN apk add --update openssh && \
-    /etc/init.d/sshd start && \
-    rc-update add sshd && \
-    echo 'root:luegamente' | chpasswd && \
-    mkdir /var/run/sshd && \
-    sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 
-EXPOSE 10022
+
+
+
+
+
+
+
+ENTRYPOINT /usr/sbin/sshd
