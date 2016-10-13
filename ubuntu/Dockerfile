@@ -30,6 +30,7 @@ RUN apt-get update && \
 		openssh-server \
 		jq \
 		coreutils && \
+	\
     echo "export LANG=C.UTF-8" > /etc/profile.d/locale.sh && \
     curl -jksSLH "Cookie: oraclelicense=accept-securebackup-cookie" -o /tmp/java.tar.gz \
       http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-b${JAVA_VERSION_BUILD}/${JAVA_PACKAGE}-${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-linux-x64.tar.gz && \
@@ -37,7 +38,9 @@ RUN apt-get update && \
     tar -C /opt -xf /tmp/java.tar && \
     ln -s /opt/jdk1.${JAVA_VERSION_MAJOR}.0_${JAVA_VERSION_MINOR} /opt/jdk && \
     sed -i s/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=30/ $JAVA_HOME/jre/lib/security/java.security && \
-    /tmp/configure_sshd.sh && \
+    \
+    chmod +x /tmp/configure_sshd.sh && /tmp/configure_sshd.sh \
+    \
     rm -rf \
     	/opt/jdk/*src.zip \
 		/opt/jdk/lib/missioncontrol \
@@ -71,6 +74,7 @@ RUN apt-get update && \
 		/opt/jdk/jre/lib/oblique-fonts \
 		/opt/jdk/jre/lib/plugin.jar \
 		/tmp/* /var/cache/apk/* && \
+	\
     echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf && \
     apt-get clean
 
