@@ -15,24 +15,23 @@ ENV JAVA_VERSION_MAJOR=8 \
     LANGUAGE=en_US:en \
     LC_ALL=en_US.UTF-8
 
-ADD configure_sshd.sh /tmp/configure_sshd.sh
 EXPOSE 22
 
-RUN apk add --update \
-        bash \
-        openssh \
-        wget \
-        coreutils \
-        jq \
-        docker \
-        unzip 
-
-RUN /tmp/configure_sshd.sh && \
-    rm -f /tmp/configure_sshd.sh
+COPY configure_sshd.sh /tmp
 
 # do all in one step
 RUN apk upgrade --update && \
-    apk add --update libstdc++ curl ca-certificates bash && \
+    apk add --update \
+          libstdc++ \
+          curl \
+          ca-certificates \
+          bash \
+          coreutils \
+          jq \
+          docker \
+          unzip \
+          wget \
+          openssh && \
     for pkg in glibc-${GLIBC_VERSION} glibc-bin-${GLIBC_VERSION} glibc-i18n-${GLIBC_VERSION}; do curl -sSL https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/${pkg}.apk -o /tmp/${pkg}.apk; done && \
     apk add --allow-untrusted /tmp/*.apk && \
     rm -v /tmp/*.apk && \
@@ -46,6 +45,7 @@ RUN apk upgrade --update && \
     tar -C /opt -xf /tmp/java.tar && \
     ln -s /opt/jdk1.${JAVA_VERSION_MAJOR}.0_${JAVA_VERSION_MINOR} /opt/jdk && \
     sed -i s/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=30/ $JAVA_HOME/jre/lib/security/java.security && \
+    /tmp/configure_sshd.sh && \
     apk del curl glibc-i18n && \
     rm -rf /opt/jdk/*src.zip \
            /opt/jdk/lib/missioncontrol \
@@ -81,12 +81,5 @@ RUN apk upgrade --update && \
            /tmp/* /var/cache/apk/* && \
     echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf
 
-
-
-
-
-
-
-
-
-ENTRYPOINT /usr/sbin/sshd
+#ENTRYPOINT ["/usr/sbin/sshd", "&&", "/bin/bash"]
+ENTRYPOINT /usr/sbin/sshd && /bin/bash

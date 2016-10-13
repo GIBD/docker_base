@@ -13,11 +13,13 @@ ENV JAVA_VERSION_MAJOR=8 \
     GLIBC_VERSION=2.23-r3 \
     LANG=C.UTF-8
 
-# do all in one step
+EXPOSE 22
+
+COPY configure_sshd.sh /tmp
+
 RUN apt-get update && \
 	apt-get upgrade -y && \
     apt-get install -y \
-    	libstdc++ \
     	curl \
     	ca-certificates \
     	bash \
@@ -29,14 +31,13 @@ RUN apt-get update && \
 		jq \
 		coreutils && \
     echo "export LANG=C.UTF-8" > /etc/profile.d/locale.sh && \
-    mkdir /opt && \
     curl -jksSLH "Cookie: oraclelicense=accept-securebackup-cookie" -o /tmp/java.tar.gz \
       http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-b${JAVA_VERSION_BUILD}/${JAVA_PACKAGE}-${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-linux-x64.tar.gz && \
     gunzip /tmp/java.tar.gz && \
     tar -C /opt -xf /tmp/java.tar && \
     ln -s /opt/jdk1.${JAVA_VERSION_MAJOR}.0_${JAVA_VERSION_MINOR} /opt/jdk && \
     sed -i s/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=30/ $JAVA_HOME/jre/lib/security/java.security && \
-    apk del curl glibc-i18n && \
+    /tmp/configure_sshd.sh && \
     rm -rf \
     	/opt/jdk/*src.zip \
 		/opt/jdk/lib/missioncontrol \
@@ -73,9 +74,5 @@ RUN apt-get update && \
     echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf && \
     apt-get clean
 
-
-ADD configure_sshd.sh /tmp/configure_sshd.sh
-EXPOSE 22
-
-RUN /tmp/configure_sshd.sh && \
-    rm -f /tmp/configure_sshd.sh
+#ENTRYPOINT ["/usr/sbin/sshd", "&&", "/bin/bash"]
+ENTRYPOINT /usr/sbin/sshd && /bin/bash

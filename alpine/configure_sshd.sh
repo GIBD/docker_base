@@ -10,7 +10,7 @@ if [ ! -f "/etc/ssh/ssh_host_dsa_key" ]; then
 fi
 if [ ! -f "/etc/ssh/ssh_host_ed25519_key" ]; then
 	# generate fresh dsa key
-	ssh-keygen -f /etc/ssh/ssh_host_dsa_key -q -N '' -t ed25519
+	ssh-keygen -f /etc/ssh/ssh_host_ed25519_key -q -N '' -t ed25519
 fi
 if [ ! -f "/etc/ssh/ssh_host_ecdsa_key" ]; then
 	# generate fresh dsa key
