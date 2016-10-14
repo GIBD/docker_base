@@ -86,6 +86,7 @@ RUN apk add --update \
     \
     echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf
 
-#ENTRYPOINT ["/usr/sbin/sshd", "&&", "/bin/bash"]
-#ENTRYPOINT /usr/sbin/sshd && /bin/bash
-ENTRYPOINT ["/bin/bash"]
+CMD /usr/sbin/sshd && /bin/bash
+#CMD ["/usr/sbin/sshd", "&&", "/bin/bash"]
+#ENTRYPOINT /usr/sbin/sshd && /bin/bash -c
+#ENTRYPOINT /bin/bash
