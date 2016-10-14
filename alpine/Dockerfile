@@ -31,6 +31,9 @@ RUN apk add --update \
           unzip \
           wget \
           openssh \
+          openssl \
+          tar \
+          xz \
           gnupg && \
     \
     for pkg in glibc-${GLIBC_VERSION} glibc-bin-${GLIBC_VERSION} glibc-i18n-${GLIBC_VERSION}; do curl -sSL https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/${pkg}.apk -o /tmp/${pkg}.apk; done && \
@@ -87,4 +90,5 @@ RUN apk add --update \
     echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf
 
 #ENTRYPOINT ["/usr/sbin/sshd", "&&", "/bin/bash"]
-ENTRYPOINT /usr/sbin/sshd && /bin/bash
+#ENTRYPOINT /usr/sbin/sshd && /bin/bash
+ENTRYPOINT ["/bin/bash"]
