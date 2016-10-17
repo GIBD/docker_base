@@ -13,7 +13,9 @@ ENV JAVA_VERSION_MAJOR=8 \
     GLIBC_VERSION=2.23-r3 \
     LANG=C.UTF-8 \
     LANGUAGE=en_US:en \
-    LC_ALL=en_US.UTF-8
+    LC_ALL=en_US.UTF-8 \
+    PYTHON_VERSION=2.7.12-r0 \
+    PIP_VERSION=8.1.2-r0
 
 EXPOSE 22
 
@@ -85,6 +87,8 @@ RUN apk add --update \
            /tmp/* /var/cache/apk/* && \
     \
     echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf
+
+RUN apk add python=$PYTHON_VERSION py-pip=$PIP_VERSION
 
 CMD /usr/sbin/sshd && /bin/bash
 #CMD ["/usr/sbin/sshd", "&&", "/bin/bash"]
