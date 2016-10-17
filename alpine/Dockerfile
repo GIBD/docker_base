@@ -22,8 +22,7 @@ EXPOSE 22
 COPY configure_sshd.sh /tmp
 
 # do all in one step
-RUN apk update && \
-    apk add \
+RUN apk add --update \
           libstdc++ \
           curl \
           ca-certificates \
@@ -90,7 +89,7 @@ RUN apk update && \
     \
     echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf
 
-RUN apk add python=$PYTHON_VERSION py-pip=$PIP_VERSION
+RUN apk add --update python=$PYTHON_VERSION py-pip=$PIP_VERSION
 
 CMD /usr/sbin/sshd && /bin/bash
 #CMD ["/usr/sbin/sshd", "&&", "/bin/bash"]
