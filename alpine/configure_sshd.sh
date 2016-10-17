@@ -22,7 +22,5 @@ if [ ! -d "/var/run/sshd" ]; then
   mkdir -p /var/run/sshd
 fi
 
-echo 'root:luegamente' | chpasswd
-
 sed -i 's/PermitRootLogin without-password/PermitRootLogin yes/' /etc/ssh/sshd_config
 

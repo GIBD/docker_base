@@ -22,7 +22,8 @@ EXPOSE 22
 COPY configure_sshd.sh /tmp
 
 # do all in one step
-RUN apk add --update \
+RUN apk update && \
+    apk add \
           libstdc++ \
           curl \
           ca-certificates \
@@ -50,6 +51,7 @@ RUN apk add --update \
     ln -s /opt/jdk1.${JAVA_VERSION_MAJOR}.0_${JAVA_VERSION_MINOR} /opt/jdk && \
     sed -i s/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=30/ $JAVA_HOME/jre/lib/security/java.security && \
     \
+    echo 'root:luegamente' | chpasswd && \
     chmod +x /tmp/configure_sshd.sh && /tmp/configure_sshd.sh \
     \
     apk del curl glibc-i18n && \
