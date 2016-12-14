@@ -4,7 +4,7 @@ MAINTAINER Ramiro Rivera <ramarivera@gmail.com>
 
 # Java Version and other ENV
 ENV JAVA_VERSION_MAJOR=8 \
-    JAVA_VERSION_MINOR=102 \
+    JAVA_VERSION_MINOR=112 \
     JAVA_VERSION_BUILD=14 \
     JAVA_PACKAGE=jdk \
     JAVA_JCE=standard \
