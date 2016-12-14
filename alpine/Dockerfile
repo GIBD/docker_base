@@ -5,7 +5,7 @@ MAINTAINER Ramiro Rivera <ramarivera@gmail.com>
 # Java Version and other ENV
 ENV JAVA_VERSION_MAJOR=8 \
     JAVA_VERSION_MINOR=112 \
-    JAVA_VERSION_BUILD=14 \
+    JAVA_VERSION_BUILD=15 \
     JAVA_PACKAGE=jdk \
     JAVA_JCE=standard \
     JAVA_HOME=/opt/jdk \
@@ -15,7 +15,8 @@ ENV JAVA_VERSION_MAJOR=8 \
     LANGUAGE=en_US:en \
     LC_ALL=en_US.UTF-8 \
     PYTHON_VERSION=2.7.12-r0 \
-    PYTHON_PIP_VERSION=8.1.2-r0
+    PYTHON_PIP_VERSION=8.1.2-r0 \
+    ROOT_PASSWORD=luegamente
 
 EXPOSE 22
 
@@ -41,16 +42,15 @@ RUN apk add --update \
     /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8 && \
     echo "export LANG=C.UTF-8" > /etc/profile.d/locale.sh && \
     /usr/glibc-compat/sbin/ldconfig /lib /usr/glibc-compat/lib && \
-    \
     mkdir /opt && \
     curl -jksSLH "Cookie: oraclelicense=accept-securebackup-cookie" -o /tmp/java.tar.gz \
-      http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-b${JAVA_VERSION_BUILD}/${JAVA_PACKAGE}-${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-linux-x64.tar.gz && \
-    gunzip /tmp/java.tar.gz && \
+        http://download.oracle.com/otn-pub/java/jdk/${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-b${JAVA_VERSION_BUILD}/${JAVA_PACKAGE}-${JAVA_VERSION_MAJOR}u${JAVA_VERSION_MINOR}-linux-x64.tar.gz  && \
+    gunzip /tmp/java.tar.gz  && \
     tar -C /opt -xf /tmp/java.tar && \
     ln -s /opt/jdk1.${JAVA_VERSION_MAJOR}.0_${JAVA_VERSION_MINOR} /opt/jdk && \
     sed -i s/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=30/ $JAVA_HOME/jre/lib/security/java.security && \
     \
-    echo 'root:luegamente' | chpasswd && \
+    echo 'root:${ROOT_PASSWORD}' | chpasswd && \
     chmod +x /tmp/configure_sshd.sh && /tmp/configure_sshd.sh \
     \
     apk del curl glibc-i18n && \
