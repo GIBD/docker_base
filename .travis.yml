@@ -1,0 +1,19 @@
+sudo: required
+
+services:
+  - docker
+
+language: python
+
+python:
+  - 3.6
+
+install:
+  - docker build -t alpine ./alpine
+  - docker run -d -p 127.0.0.1:80:80 --name alpine alpine
+
+script:
+  - docker ps | grep -q alpine
+
+notifications:
+  slack: frcubigdata:UHa7tsq87e6C0xd0C8es5CQO
