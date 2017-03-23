@@ -51,7 +51,7 @@ RUN apk add --update \
     sed -i s/#networkaddress.cache.ttl=-1/networkaddress.cache.ttl=30/ $JAVA_HOME/jre/lib/security/java.security && \
     \
     echo 'root:${ROOT_PASSWORD}' | chpasswd && \
-    chmod +x /tmp/configure_sshd.sh && /tmp/configure_sshd.sh \
+    chmod +x /tmp/configure_sshd.sh && sync && /tmp/configure_sshd.sh \
     \
     apk del curl glibc-i18n && \
     rm -rf /opt/jdk/*src.zip \
