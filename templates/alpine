@@ -1,4 +1,4 @@
-FROM alpine::CI_ALPINE_VERSION:
+FROM alpine::CI_SO_VER:
 
 MAINTAINER Ramiro Rivera <ramarivera@gmail.com>
 

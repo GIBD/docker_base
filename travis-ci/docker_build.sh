@@ -7,13 +7,14 @@ dockerfile_path="${dockerfile_folder}/Dockerfile"
 
 mkdir -p $dockerfile_folder
 cp $template_file $dockerfile_path
-cat $dockerfile_path
 
 ci_env_vars=`env | awk 'match($0, /(CI_.*)=/) {print substr($0, RSTART, RLENGTH-1)}'`
 
 for var_name in $ci_env_vars; do
     sed -ie "s/:${var_name}:/${!var_name}/g" $dockerfile_path
 done
+
+cat $dockerfile_path
 
 docker build --tag "${CI_IMAGE_NAME}:${tag}" $dockerfile_folder
 
