@@ -15,8 +15,9 @@ for var_name in $ci_env_vars; do
 done
 
 echo catting docker file path
+echo $dockerfile_path
 cat $dockerfile_path
 echo catted docker file path
 
-docker build "${CI_IMAGE_NAME}:${tag}" $dockerfile_path
+docker build --tag "${CI_IMAGE_NAME}:${tag}" $dockerfile_path
 
