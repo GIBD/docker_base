@@ -12,11 +12,13 @@ for var_name in $ci_env_vars; do
     sed -e "s/:${var_name}:/${!var_name}/g" $dockerfile_path > $dockerfile_path
 done
 
+echo catting docker file path
 cat $dockerfile_path
-echo $tag
-echo $dockerfile_path
-echo $dockerfile_folder
-ls -laih $dockerfile_path
+echo catted docker file path
+echo ci env vars
+echo $ci_env_vars
+echo ci env vars echoed
 
-docker build base:${tag} $dockerfile_path
+
+docker build "${CI_IMAGE_NAME}:${tag}" $dockerfile_path
 
