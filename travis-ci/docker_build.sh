@@ -1,5 +1,8 @@
 #! /bin/bash
 
+echo "PATHHHH"
+pwd
+
 tag="${CI_SO}${CI_SO_VER}_jdk1.${CI_JAVA_MAJOR}_py${CI_PY_VER}"
 dockerfile_folder="../Dockerfiles/${CI_SO}${CI_SO_VER}/jdk1.${CI_JAVA_MAJOR}/py${CI_PY_VER}"
 dockerfile_path="${dockerfile_folder}/Dockerfile"
