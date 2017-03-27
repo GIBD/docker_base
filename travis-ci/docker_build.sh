@@ -14,5 +14,7 @@ for var_name in $ci_env_vars; do
     sed -e "s/:${var_name}:/${!var_name}/g" $dockerfile_path > $dockerfile_path
 done
 
+cat $template_file
+
 docker build --tag "${CI_IMAGE_NAME}:${tag}" $dockerfile_folder
 
