@@ -12,5 +12,11 @@ for var_name in $ci_env_vars; do
     sed -e "s/:${var_name}:/${!var_name}/g" $dockerfile_path > $dockerfile_path
 done
 
+cat $dockerfile_path
+echo $tag
+echo $dockerfile_path
+echo $dockerfile_folder
+ls -laih $dockerfile_path
+
 docker build base:${tag} $dockerfile_path
 
