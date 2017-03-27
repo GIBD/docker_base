@@ -9,11 +9,11 @@ image_name="base:${image_tag}"
 echo_result=`docker run --name ${image_tag} ${image_name} echo ${message}`
 echo_result2="$(docker run --name ${image_tag} ${image_name} echo ${message})"
 
-if [ $message != $echo_result ]; then   
+if [ "$message" != "$echo_result" ]; then   
   exit 1
 fi
 
-if [ $message != $echo_result2 ]; then   
+if [ "$message" != "$echo_result2" ]; then   
   exit 1
 fi
 
