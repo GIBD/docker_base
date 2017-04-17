@@ -6,6 +6,8 @@ dockerfile_folder="./Dockerfiles/${CI_SO}${CI_SO_VER}/jdk1.${CI_JAVA_MAJOR}/py${
 dockerfile_path="${dockerfile_folder}/Dockerfile"
 
 mkdir -p $dockerfile_folder
+pwd
+
 cp "./source/${CI_SO}/*.*" ${dockerfile_folder}
 cp "./source/common/*.*" ${dockerfile_folder}
 
