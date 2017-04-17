@@ -6,8 +6,8 @@ dockerfile_folder="./Dockerfiles/${CI_SO}${CI_SO_VER}/jdk1.${CI_JAVA_MAJOR}/py${
 dockerfile_path="${dockerfile_folder}/Dockerfile"
 
 mkdir -p $dockerfile_folder
-cp $template_folder/*.* $dockerfile_path
-cp ./source/common/*.* $dockerfile_path
+cp $template_folder/*.* ${dockerfile_folder}
+cp ./source/common/*.* ${dockerfile_folder}
 
 ci_env_vars=`env | awk 'match($0, /(CI_.*)=/) {print substr($0, RSTART, RLENGTH-1)}'`
 
