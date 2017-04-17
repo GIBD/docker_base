@@ -1,12 +1,13 @@
 #! /bin/bash
 
-template_file="./templates/${CI_SO}"
+template_folder="./source/${CI_SO}"
 tag="${CI_SO}${CI_SO_VER}_jdk1.${CI_JAVA_MAJOR}_py${CI_PY_VER}"
 dockerfile_folder="./Dockerfiles/${CI_SO}${CI_SO_VER}/jdk1.${CI_JAVA_MAJOR}/py${CI_PY_VER}"
 dockerfile_path="${dockerfile_folder}/Dockerfile"
 
 mkdir -p $dockerfile_folder
-cp $template_file $dockerfile_path
+cp $template_folder/*.* $dockerfile_path
+cp ./source/common/*.* $dockerfile_path
 
 ci_env_vars=`env | awk 'match($0, /(CI_.*)=/) {print substr($0, RSTART, RLENGTH-1)}'`
 
