@@ -18,5 +18,5 @@ done
 
 rm -rf "${dockerfile_path}.bak"
 
-docker build --tag "${CI_IMAGE_NAME}:${tag}" $dockerfile_folder
+docker build --tag "gibdbigdata/${CI_IMAGE_NAME}:${tag}" $dockerfile_folder
 
