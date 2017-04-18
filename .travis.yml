@@ -1,45 +1,37 @@
-  sudo: required
-  services:
-    - docker
-
-  language: python
-  python:
-    - 3.6
-
-  install:
-    - bash ./travis-ci/docker_build.sh
-  
-  script:
-    - bash ./travis-ci/docker_test.sh
-
-  env:
-    global:
-      - CI_IMAGE_NAME=base
-      - CI_SO=alpine
-    matrix:
-      - CI_SO_VER=3.4 CI_JAVA_MAJOR=8  CI_JAVA_MINOR=112  CI_JAVA_BUILD=15  CI_PY_VER=2.7 CI_PY_BUILD=12-r0  CI_PIP_VER=8.1.2-r0
-
-  notifications:
-    slack: frcubigdata:UHa7tsq87e6C0xd0C8es5CQO
-
-  branches:
-    only:
-      - master
-
-  before_deploy: "echo 'ready?'"
-
-  deploy:
-    provider: releases
-    api_key:
-      secure: "oFD/tic8JAwpMXuMDBZXV4ot6w1NLWvHQnrDKmUHSMQJC1cbbrR1p5q8XayfjtmdqQdFQmIfM6YHEKeHw//ypgObWjYS8q00OaaMDXPTdmgr1Ee4nhgkkDihT+kVij0rn96W/QvyAVoaV5hJoyUr3Nhk+mnHEYm3M+Q3LAQglRg="
-    file_glob: true
-    file: ./Dockerfiles/*
-    skip_cleanup: true
-    on:
-      repo: GIBDBigData/docker_base
-      tags: true
-      all_branches: true
-
-  after_deploy:
-    - echo "deployed1"
-    - echo "deployed2"
+sudo: required
+services:
+- docker
+language: python
+python:
+- 3.6
+install:
+- bash ./travis-ci/docker_build.sh
+script:
+- bash ./travis-ci/docker_test.sh
+env:
+  global:
+  - CI_IMAGE_NAME=base
+  - CI_SO=alpine
+  - matrix:
+    - CI_SO_VER=3.4 CI_JAVA_MAJOR=8  CI_JAVA_MINOR=112  CI_JAVA_BUILD=15  CI_PY_VER=2.7  CI_PY_BUILD=12-r0  CI_PIP_VER=8.1.2-r0
+notifications:
+  slack: 
+    secure: SL9ZOBdNUyYNfMEZ7YEHIhYkxMyGMWnzMDf5HcU4+cKJdqGbUC4c78hbBLi/bCN6D8ftyDiitU1/NTEXRjXBxbWVFSavQ5MjjN5PYt38u4a50aEHYds8VyubQ+DqPDdYl/wvQGCh+L5n6RNoB8WwGkbYxHjbTG33CCvpuoIpLzgvk0XMEdJkRxu1i+hq3uZsexYN8b8QNcegbkGvfzWbxU0JTJU0u8nRzn2uNAsf1FiuDX5XTXz3WKMuN0DZulJ4PTmZw4ccNMSjIAggqZ9EwqQC9ab9jzbcQn1oivNc0Wo65EfJbL4IaB5e+Y7Fw3/EXASM6xQNeRKzNsq7eZNZHLmj+UKzJva4WvdSFNqxpRQL0QDr0AVWbAPU4hRMI7d5n2C7KgPcb8Kx4MCoRVl7t5vRjL1F8Vae7hVg3BT5cSOyrIdQbTClw69qH4lqrGFBmCvAB1MBMwFn3uCr0IVP85qKXSuCS6cbYyzk7Nke//tZt0jaEQep082xPpdQgihuYTSUAnZvDu3qAymCRTPPumGZiWhNaicMq+a/mcakMrTmA8N7tY0srwC8TGUCaW4Itgn0ILZcBgnBx5SnxTKSdo9bzTh8yETIyHtnR7Jhsu+gkizuQ03DNT47WU3Fi7hYweVomsXmxScx9WtKzcYYadCzLmR+TmFkKRyRMDt3t1c=
+branches:
+  only:
+  - master
+before_deploy: echo 'ready?'
+deploy:
+  provider: releases
+  api_key:
+    secure: oFD/tic8JAwpMXuMDBZXV4ot6w1NLWvHQnrDKmUHSMQJC1cbbrR1p5q8XayfjtmdqQdFQmIfM6YHEKeHw//ypgObWjYS8q00OaaMDXPTdmgr1Ee4nhgkkDihT+kVij0rn96W/QvyAVoaV5hJoyUr3Nhk+mnHEYm3M+Q3LAQglRg=
+  file_glob: true
+  file: "./Dockerfiles/*"
+  skip_cleanup: true
+  on:
+    repo: GIBDBigData/docker_base
+    tags: false
+    all_branches: true
+after_deploy:
+- echo "deployed1"
+- echo "deployed2"
