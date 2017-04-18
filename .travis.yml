@@ -20,7 +20,7 @@ notifications:
 branches:
   only:
   - master
-before_deploy: tar -zcvf Dockerfiles.tar.gz ./Dockerfile
+before_deploy: tar -zcvf Dockerfiles.tar.gz ./Dockerfiles
 deploy:
   provider: releases
   api_key:
