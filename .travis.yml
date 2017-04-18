@@ -36,7 +36,9 @@
     file: ./Dockerfiles/*
     skip_cleanup: true
     on:
+      repo: GIBDBigData/docker_base
       tags: true
+      all_branches: true
 
   after_deploy:
     - echo "deployed1"
