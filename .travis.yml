@@ -1,13 +1,19 @@
 sudo: required
+
 services:
 - docker
+
 language: python
+
 python:
 - 3.6
+
 install:
 - bash ./travis-ci/docker_build.sh
+
 script:
 - bash ./travis-ci/docker_test.sh
+
 env:
   global:
   - CI_IMAGE_NAME=base
@@ -17,17 +23,23 @@ env:
   - secure: UTtJAH2QGKslN4dJJzKtxC5A3+LMDQhihQQJfD8inGqPtxpGtCU4rqGif/rIocBrWVPKYBeTwgA69Hii9hSVEv5LJln3ArgqqBYPKQLQmDviNwrrPa+VjmGH5KpFyei9hqCNdak2Mmx7h9Tl4Wq+kTcyDazlzAepo2TOA3+AL+t3D4DhpDQ5fJbqC+f0eg3oAQnvcQcU7ysSC9vpVSYsMwiRm1zecQ85f/GI+hzkA4NqyM9WnoEza4pf2M58+yWM9pA4bkcldiqm7KbCkVle4YCb7or1MWL6qRBetEdECTpGSywAuP2sVZDcSq+J8aU3ADq/ejEGtrnIdOoAeH/ph/WyasqqRJcLTSgOR0mYboudE0TwB8XG0LIL3AcmsN5ZPfmqODwz3mzIA1O/2Ud1mw/4uCI+39Ges/T5xdqK/faGwBCV5eF/6KNTtHTbs9xwE21f99Fxm/LZywOsqi7S9kjncxkCjas7ozhU2s7uxu/itkzZOkutmQsZ7iB3Rmurdmd63fuwIarz46rt4BQQ9apxK9R3+VKTc4yNAf6au1IBXS86VFc8zCQyDIg4/KKbM8V/GDYQwGLLd1aBpVghU5HpzkZy2VDs2d7cN+GiutxtzWsoH8hYfvxrgFzPAsTKX3atE7rkF+9syTCMbfLJgFVh7d0SqbkPc1bpNZc2H6Q=
   - secure: cdp7GcLEVIHH5Ll1U1McjIkWv9GA9zLtkvEfcFvSqnXYQa7uF4E+oOMj+GGRpODEUoIYWfi6laVfiu1O5QkGN5js+CmzcKoX2Ww/nwSsLSIrYkqwC8mqyhMdjvhFz48CqtM7bICtla0sN70HrXfIPw6HJgVCdB57GznyeLtovjJXNgXgan7RFNQsQ3c5c6zv04RZPB6+K+BbMeYhLxW3pF54XQEqkDahfNyGAMt1yYSp57nRLZMlfugFMPL4ifM1ia4Gq2ZDQJ/hrpixHiCizkvao+FeLpv03Zu6qqfeoZGkTvPuP05j5s1NWIEC5nJM3BvpmVTxTZjQSCYfTOWLknNsie4SkLKI+3d6F9VXLsJLdoGaOh2Sqmj5dsoUPz7qdEx2Qo8h3PpagFGkDXr2urTSEks0M0XziP03hU5MzYPRFI724/bb5AWx6zLB2km5EGADkRylVBK3o/Ol/IadX+umgnE7oJAR/9AKHsQdjl9LhZTCuDFzTBR1gyP+pj15pGYNBg02qXvjLndTSAPs0JcSJc3IYnn9K7xHex57Cv4ETMMeg7lDdUixe1fD5aYRRQuAUfPDiw+24/pCE/IM5KribqecGZdyilL/4UMChagYoDBj89b+qi0B1MFizLU7ClHKy1Acfeau2TzAX+xooPEkawFWP7kb6ogEOKy9FMs=
   - secure: Ant9hu5nQ0sQPIBnCEe+1gyJYVuceaZ8tMGigFeFLYlXPURTh+aGTmQAC026ZKhCDJ7m6ZAov0ssyOTn7QNXEASqnFvG9MD/Vpfj5IguTa4Q+VCmdlvTK6Bw1SKFRK87vTZrTkd4I5h//qqbX5+tJZ/wADXjiPq2zelMrewshP17CIFCtYYOASJ5lP0F/mJzuWzfW8pO6NNuRsIxAsDxmAeA5oTnVb1+KHYFIS05RlhKFLvxHvSeWyGDFVKoSiooInGLmg5g2pKjBJFew9FlndOos8Z2iXgRISa55jk9g22Kwgo8a18CtFWyQU8w5t6EaLkxFsY6MlL/xS0oEck2HWTDOJPt+zBKFSDVrytJ3oo6qznt+q7HanzQQ6FEoU4fEcr31c6mvTb5DpNLtHMY9PEd70Fbo6/1532VeVrxDEonUSb+Ggi0QLvEZlEqTS+Cmt+6f+mgMJHeoeZpjHlvSG4El/bMXQbSgPfQyxAZptWbCdDsTA/gjnmwv3+NgkjLLdkxiXKKsQdZ9QNk0UfR7gBS0eEP9s+nNM8ktNTTgG3ondFJBJsjDTRuKTZsdF+qfFQsXQ014zxAP5gy7sehgVg5+JM9pTSjw83dmH6BoK5CtIAaUd4Iq+sM2wmr/FeMFMtFvoyNO6bsz9we89o891insAORpEIh0hhgJcHOh84=
+
 notifications:
   slack:
     secure: SL9ZOBdNUyYNfMEZ7YEHIhYkxMyGMWnzMDf5HcU4+cKJdqGbUC4c78hbBLi/bCN6D8ftyDiitU1/NTEXRjXBxbWVFSavQ5MjjN5PYt38u4a50aEHYds8VyubQ+DqPDdYl/wvQGCh+L5n6RNoB8WwGkbYxHjbTG33CCvpuoIpLzgvk0XMEdJkRxu1i+hq3uZsexYN8b8QNcegbkGvfzWbxU0JTJU0u8nRzn2uNAsf1FiuDX5XTXz3WKMuN0DZulJ4PTmZw4ccNMSjIAggqZ9EwqQC9ab9jzbcQn1oivNc0Wo65EfJbL4IaB5e+Y7Fw3/EXASM6xQNeRKzNsq7eZNZHLmj+UKzJva4WvdSFNqxpRQL0QDr0AVWbAPU4hRMI7d5n2C7KgPcb8Kx4MCoRVl7t5vRjL1F8Vae7hVg3BT5cSOyrIdQbTClw69qH4lqrGFBmCvAB1MBMwFn3uCr0IVP85qKXSuCS6cbYyzk7Nke//tZt0jaEQep082xPpdQgihuYTSUAnZvDu3qAymCRTPPumGZiWhNaicMq+a/mcakMrTmA8N7tY0srwC8TGUCaW4Itgn0ILZcBgnBx5SnxTKSdo9bzTh8yETIyHtnR7Jhsu+gkizuQ03DNT47WU3Fi7hYweVomsXmxScx9WtKzcYYadCzLmR+TmFkKRyRMDt3t1c=
+
 branches:
   only:
   - master
+
 after_success:
   - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
-  - export TAG="${CI_SO}${CI_SO_VER}_jdk1.${CI_JAVA_MAJOR}_py${CI_PY_VER}"
+  - export TAG="${CI_BASE_IMAGE}${CI_BASE_VER}"
   - docker push "gibdbigdata/${CI_IMAGE_NAME}:${TAG}"
+
 before_deploy: tar -zcvf Dockerfiles.tar.gz ./Dockerfiles
+
+
 deploy:
   provider: releases
   api_key:
@@ -36,6 +48,7 @@ deploy:
   skip_cleanup: true
   on:
     tags: true
+
 after_deploy:
 - echo "deployed1"
 - echo "deployed2"
