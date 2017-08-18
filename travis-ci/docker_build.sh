@@ -1,14 +1,15 @@
 #! /bin/bash
 
-template_folder="./source/${CI_SO}"
-tag="${CI_SO}${CI_SO_VER}_jdk1.${CI_JAVA_MAJOR}_py${CI_PY_VER}"
-dockerfile_folder="./Dockerfiles/${CI_SO}${CI_SO_VER}/jdk1.${CI_JAVA_MAJOR}/py${CI_PY_VER}"
+template_folder="./source/${CI_BASE_IMAGE}"
+tag="${CI_BASE_IMAGE}${CI_BASE_VER}"
+
+dockerfile_folder="./Dockerfiles/${CI_BASE_IMAGE}${CI_BASE_VER}/${CI_IMAGE_NAME}"
 dockerfile_path="${dockerfile_folder}/Dockerfile"
 
 mkdir -p $dockerfile_folder
 
-cp "./source/${CI_SO}"/* "${dockerfile_folder}/"
-cp "./source/common"/* "${dockerfile_folder}/"
+cp ./source/${CI_BASE_IMAGE}/* ${dockerfile_folder}/
+cp ./source/common/* ${dockerfile_folder}/
 
 ci_env_vars=`env | awk 'match($0, /(CI_.*)=/) {print substr($0, RSTART, RLENGTH-1)}'`
 
